@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- List of degrees-->
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Degree</th>
+			<th>Institution</th>
+			<th>Application deadline</th>
+			<th>Location</th>
+			<th/>
+			<th/>
+		</tr>
+	</thead>
+
+	<tbody>
+
+		<tr>
+			<td>B.Sc. Computer Science</td>
+			<td>University of Helsinki</td>
+			<td>20.1.2016</td>
+			<td>Helsinki</td>
+			<td><a class="btn btn-primary" data-toggle="modal" data-target="#preview">
+				More info
+			</a></td>
+			<td><a class="btn btn-warning">Remove</a></td>
+		</tr>
+
+		<tr>
+			<td>B.Tech. Computer Engineering</td>
+			<td>Aalto University</td>
+			<td>20.3.2016</td>
+			<td>Espoo</td>
+			<td><a class="btn btn-primary" data-toggle="modal" data-target="#preview">
+				More info
+			</a></td>
+			<td><a class="btn btn-warning">Remove</a></td>
+		</tr>
+
+		<tr>
+			<td>B.Sc. Software Engineering</td>
+			<td>Lappeenranta University</td>
+			<td>10.3.2016</td>
+			<td>Lappeenranta</td>
+			<td><a class="btn btn-primary" data-toggle="modal" data-target="#preview">
+				More info
+			</a></td>
+			<td><a class="btn btn-warning">Remove</a></td>
+		</tr>
+
+	</tbody>
+
+</table>
+
+<!-- Modal with additional info on degree -->
+<div class="modal fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+				<h4 class="modal-title" id="myModalLabel">B.Sc. Computer Science</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table table-striped">
+					<tr>
+						<th>Education institute</th>
+						<td>Lappeenranta University of Technology</td>
+					</tr>
+					<tr>
+						<th>Extent of degree</th>
+						<td>300 ECTS</td>
+					</tr>
+					<tr>
+						<th>City</th>
+						<td>Lappeenranta</td>
+					</tr>
+					<tr>
+						<th>Students accepted per year (max)</th>
+						<td>80</td>
+					</tr>
+					<tr>
+						<th>Share of applicants accepted last year</th>
+						<td>33%</td>
+					</tr>
+
+				</table>
+
+				<h4>Description</h4>
+				<p> LUT's Master's programme in Computer Science emphasises the viewpoint of technology in IT. The aim of the programme is to prepare students both professionally and academically for the areas of information technology that offer extensive career opportunities. </p>
+				<p>
+					The programme also provides students with the readiness to undertake postgraduate studies and independent studies in information technology. Graduates will be equipped to challenge the rapidly changing world of ICT through their capability to maintain a high level of expertise and knowledge. The Master's Programme in Computer Science leads to the degree of Master of Science (Technology).
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-warning">Remove from My Degrees</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<h2>Modify Degree</h2>
+<table class="table table-striped">
+	<form class="form-horizontal" id="degreeForm" role="form" action=${#} method="POST" >                         
+		<div class="form-group">
+			<label class="col-xs-1 control-label" for="name">Degree name</label>
+			<div class ="col-xs-11">
+				<input class="form-control" type="text" id ="name" name="name" value="B.Sc. Computer Science">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-1 control-label" for="extent">Extent (ECTs)</label>
+			<div class="col-xs-11">
+				<input class="form-control" type="text" name="extent" id="extent" value="300">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-1 control-label" for="city">City</label> 
+			<div class="col-xs-11">
+				<input class="form-control" type="text" name="city" id="city" value="Lappeenranta">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-1 control-label" for="accepted">Accepted students per year (max)</label> 
+			<div class="col-xs-11">
+				<input class="form-control" type="text" name="accepted" id="accepted" value="100">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-1 control-label" for="acceptancerate">Share of applicants accepted (%)</label> 
+			<div class="col-xs-11">
+				<input class="form-control" type="text" name="accceptancerate" id="acceptancerate" value="30">
+			</div>
+		</div>
+		<div class="form-group">
+		<label class="col-xs-1 control-label" for="description">Share of applicants accepted (%)</label> 
+			<div class="col-xs-11">
+				<input class="form-control" type="text" name="accceptancerate" id="acceptancerate" value="30">
+			</div>
+		</div>
+		<h4>Description</h4>
+		<textarea name="description" form="degreeForm">A Bs.C. in Tech entails....</textarea>
+		<br/>
+		<a href="#" class="btn btn-default">Cancel</a>
+		<button type="submit" id="save" class="btn btn-default">Save changes</button>
+
+	</form>
+
+</table>
+
+
+
+{% endblock %}
