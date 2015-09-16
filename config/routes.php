@@ -7,6 +7,10 @@
   $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
   });
+  
+  $routes->get('/home', function(){
+  HelloWorldController::home();
+  });
 
     $routes->get('/mydegrees', function() {
     HelloWorldController::mydegrees();

@@ -1,5 +1,5 @@
 <?php
-
+    
   class HelloWorldController extends BaseController{
 
     public static function index(){
@@ -8,8 +8,15 @@
     }
 
     public static function sandbox(){
-      // Testaa koodiasi täällä
-      View::make('home.html');
+     $applicant = Applicant::find(1);
+     $degrees = Degree::all();
+     
+     Kint::dump($applicant);
+     Kint::dump($degrees);
+    }
+    
+    public static function home(){
+        View::make('home.html');
     }
 
     public static function mydegrees(){
