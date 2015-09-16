@@ -17,6 +17,7 @@ $(document).ready(function () {
     document.getElementById('accepted').innerHTML = accepted;
     document.getElementById('acceptancerate').innerHTML = acceptancerate*100 + " %";
     document.getElementById('city').innerHTML = city;
+    document.getElementById('edit').setAttribute("href","/tsoha/degrees/edit/"+ button.data('id'));
     
     //TODO: Figure out how to get the education institute into this (has many-to-many relationship). Needs AJAX?
     });
