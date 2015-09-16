@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="alert alert-warning">
+    This page is under construction so it does not work yet.
+</div>
+
+<h2>Modify Degree</h2>
+<table class="table table-striped">
+	<form class="form-horizontal" id="degreeForm" method="POST" action="{{base_path}}/degree/edit/">                         
+		<div class="form-group">
+			<label for="name">Degree name</label>
+				<input class="form-control" type="text" id ="name" name="name" value="B.Sc. Computer Science">
+		</div>
+		<div class="form-group">
+			<label for="extent">Extent (ECTS)</label>
+				<input class="form-control" type="text" name="extent" id="extent" value="300">
+		</div>
+		<div class="form-group">
+			<label for="city">City</label> 
+				<input class="form-control" type="text" name="city" id="city" value="Lappeenranta">
+		</div>
+		<div class="form-group">
+			<label cfor="accepted">Accepted students per year (max)</label> 
+				<input class="form-control" type="text" name="accepted" id="accepted" value="100">
+		</div>
+		<div class="form-group">
+			<label for="acceptancerate">Share of applicants accepted (%)</label> 
+				<input class="form-control" type="text" name="accceptancerate" id="acceptancerate" value="30">
+		</div>
+		<div class="form-group">
+		<label for="deadline">Application deadline</label> 
+				<input class="form-control" type="text" name="deadline" id="deadline" value="10.2.2016">
+		</div>
+		<div class="form-group">
+		<label>Description</label> 
+				<textarea class="form-control" name="description" id="description" value="This degree..."> </textarea>
+		</div>
+		<a href="#" class="btn btn-default">Cancel</a>
+		<button type="submit" id="save" class="btn btn-primary" style="margin: 5px">Save changes</button>
+
+	</form>
+
+</table>
+
+
+
+{% endblock %}
