@@ -1,37 +1,57 @@
 <?php
 
 $routes->get('/', function() {
-    HelloWorldController::index();
+HelloWorldController::index();
 });
 
 $routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
+HelloWorldController::sandbox();
 });
 
 $routes->get('/home', function() {
-    HelloWorldController::home();
+HelloWorldController::home();
+});
+
+$routes->get('/login', function() {
+UserController::login();
+});
+
+$routes->post('/login', function() {
+UserController::handle_login();
 });
 
 $routes->get('/mydegrees', function() {
-    HelloWorldController::mydegrees();
+DegreeController::myDegrees();
 });
 
 $routes->get('/degrees', function() {
-    DegreeController::index();
+DegreeController::index();
 });
 
 $routes->get('/degrees/new', function(){
-    DegreeController::create();
+DegreeController::create();
 });
 
 $routes->post('/degrees/new', function(){
-    DegreeController::store();
+DegreeController::store();
 });
 
 $routes->get('/degree', function() {
-    HelloWorldController::degree();
+HelloWorldController::degree();
 });
 
-$routes->get('/degrees/edit/:id', function($id){
-    DegreeController::modify($id);
+$routes->get('/degree/:id/update', function($id){
+DegreeController::edit($id);
+});
+
+$routes->post('/degree/:id/update', function($id){
+DegreeController::update($id);
+});
+
+$routes->post('/degree/:id/delete', function($id){
+DegreeController::delete($id);
+});
+
+$routes->post('/favorite/:id/delete', function($id){
+FavoriteController::delete($id);
 });

@@ -8,19 +8,22 @@
     }
 
     public static function sandbox(){
-     $applicant = Applicant::find(1);
-     $degrees = Degree::all();
+        
+     $tech = new Degree(array(
+         'name' => '',
+         'description' => 'What a d',
+         'extent' => -1,
+         'city' => null,
+         'acceptancerate' => 10.1
+     ));
      
-     Kint::dump($applicant);
-     Kint::dump($degrees);
+     $errors = $tech->errors();
+        
+     Kint::dump($errors);
     }
     
     public static function home(){
         View::make('home.html');
-    }
-
-    public static function mydegrees(){
-      View::make('suunnitelmat/mydegrees.html');
     }
 
     public static function degree(){

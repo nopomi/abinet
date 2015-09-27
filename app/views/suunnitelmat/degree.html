@@ -4,35 +4,46 @@
 
 
 <h2>New degree</h2>
+
+{% if errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+{% endif %}
+  
 <table class="table table-striped">
     <form class="form-horizontal" id="degreeForm" method="post" action="{{base_path}}/degrees/new">                         
         <div class="form-group">
             <label for="name">Degree name</label>
-            <input class="form-control" type="text" id ="name" name="name" placeholder="'B.Sc. Physics'">
+            <input class="form-control" type="text" id ="name" name="name" placeholder="'B.Sc. Physics'" value="{{attributes.name}}">
         </div>
         <div class="form-group">
             <label for="extent">Extent (ECTs)</label>
-            <input class="form-control" type="text" name="extent" id="extent" placeholder="'180'">
+            <input class="form-control" type="text" name="extent" id="extent" placeholder="'180'" value="{{attributes.extent}}">
         </div>
         <div class="form-group">
             <label for="city">City</label> 
-            <input class="form-control" type="text" name="city" id="city" placeholder="'Helsinki'">
+            <input class="form-control" type="text" name="city" id="city" placeholder="'Helsinki'" value="{{attributes.city}}">
         </div>
         <div class="form-group">
             <label cfor="accepted">Accepted students per year (max)</label> 
-            <input class="form-control" type="text" name="accepted" id="accepted" placeholder="'79'">
+            <input class="form-control" type="text" name="accepted" id="accepted" placeholder="'79'" value="{{attributes.accepted}}">
         </div>
         <div class="form-group">
             <label for="acceptancerate">Share of applicants accepted (decimal)</label> 
-            <input class="form-control" type="text" name="acceptancerate" id="acceptancerate" placeholder="'0.3'">
+            <input class="form-control" type="text" name="acceptancerate" id="acceptancerate" placeholder="'0.3'" value="{{attributes.acceptancerate}}">
         </div>
         <div class="form-group">
             <label for="deadline">Application deadline</label> 
-            <input class="form-control" type="text" name="deadline" id="deadline" placeholder="'2015-06-16'">
+            <input class="form-control" type="text" name="deadline" id="deadline" placeholder="'2015-06-16'" value="{{attributes.deadline}}">
         </div>
         <div class="form-group">
             <label>Description</label> 
-            <textarea class="form-control" name="description" id="description" placeholder="'This degree kicks ass.'"></textarea>
+            <textarea class="form-control" name="description" id="description" placeholder="'This degree kicks ass.'">{{attributes.description}}</textarea>
         </div>
         <a href="{{base_path}}/degrees" class="btn btn-default">Cancel</a>
         <button type="submit" id="save" class="btn btn-primary" style="margin: 5px">Save</button>

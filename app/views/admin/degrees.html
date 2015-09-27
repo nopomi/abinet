@@ -20,6 +20,7 @@
             <th>Extent</th>
             <th/>
             <th/>
+            <th/>
         </tr>
     </thead>
 
@@ -36,7 +37,10 @@
                         data-city="{{degree.city}}" data-extent="{{degree.extent}}">
                     More info
                 </button></td>
-            <td><a class="btn btn-warning">Remove</a></td>
+            <td><a class="btn btn-warning" href="{{base_path}}/degree/{{degree.id}}/update">Edit</td>
+            <form method="post" action="{{base_path}}/degree/{{degree.id}}/delete" style="display: inline-block;">
+                <td><button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?');">Remove</button></td>
+            </form>
         </tr>
         {% endfor %}
     </tbody>
@@ -89,7 +93,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a class="btn btn-warning" id="edit" href="{{base_path}}/degrees/new">Edit</a>
             </div>
         </div>
     </div>

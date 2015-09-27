@@ -20,10 +20,26 @@
       $errors = array();
 
       foreach($this->validators as $validator){
-        // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
+          $validator_errors = $this->{$validator}();
+          $errors = array_merge($errors, $validator_errors);
       }
 
       return $errors;
     }
-
+    
+    public function validate_string_length($string, $length){
+        if($string == null || strlen($string)<$length){
+            return false;
+        }
+        return true;
+    }
+    
+    public function validate_number_size($number, $min, $max){
+        if($number == null || is_numeric($number) == false){
+            return false;
+        } elseif ($number < $min || $number > $max){
+            return false;
+        }
+        return true;
+    }
   }

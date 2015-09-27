@@ -40,13 +40,19 @@
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="nav navbar-nav">
           <!-- Navigaation linkit -->
-          <li><a href="{{base_path}}">Home</a></li>
-          <li><a href="#">My Degrees</a></li>
+          <li><a href="{{base_path}}/home">Home</a></li>
+          {% if user_logged_in %}
+            <li><a href="{{base_path}}/mydegrees">My Degrees</a></li>
+          {% endif %}
           <li><a href="#">Search</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Log out</a></li>
+        {% if user_logged_in %}
+            <li><a href="#">Log out</a></li>
+        {% else %}
+            <li><a href="{{base_path}}/login">Log in</a></li>
+        {% endif %}
         </ul>
       </div>
     </div>
