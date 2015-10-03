@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Controller that handles CRUD functions of all degrees. 
+ */
+
 class DegreeController extends BaseController {
 
     public static function index() {

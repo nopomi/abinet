@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Model of education degrees. Handles validation of parameters,
+ * creation and database queries.
+ */
+
 class Degree extends BaseModel {
 
     public $id, $name, $deadline, $description,

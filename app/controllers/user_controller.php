@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Controller that handles admin and applicant related functions,
+ * including login/logout and creation and deletion of accounts.
+ */
+
 class UserController extends BaseController{
     
   public static function login(){

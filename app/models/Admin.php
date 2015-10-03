@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Class that handles admin-specific authentication.
+ */
+
 class Admin extends BaseModel {
 
     public $id, $email, $password;

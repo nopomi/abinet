@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Controller that handles CRUD functions of educational
+ * institutions. Only accessible to admins.
+ */
+
 class InstitutionController extends BaseController {
 
     public static function index() {

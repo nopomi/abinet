@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Model of educational institutions. Handles validation of parameters,
+ * creation, deletion and database queries. Admin only has rights to modify these.
+ */
+
 class Institution extends BaseModel {
 
     public $id, $name, $picture;

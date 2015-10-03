@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Model of average users (called applicants), handles
+ * authentication as well.
+ */
+
 class Applicant extends BaseModel {
 
     public $id, $email, $password;

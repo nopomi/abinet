@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Model of user-specific favorite degrees. Handles validation of parameters,
+ * creation, deletion and database queries.
+ */
+
+
 class Favorite extends BaseModel {
 
     public $applicant_id, $degree_id;
