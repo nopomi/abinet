@@ -12,5 +12,19 @@
 
     return null;
   }
+  
+  public static function get_user_admin(){
+      if(isset($_SESSION['admin'])){
+          return $_SESSION['admin'];
+      }
+      return null;
+  }
+ 
+  
+  public static function check_logged_in(){
+      if(!isset($_SESSION['user'])){
+          Redirect::to('/login', array('message' => 'Please log in first'));
+      }
+  }
 
   }

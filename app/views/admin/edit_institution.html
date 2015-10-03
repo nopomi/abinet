@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<h2>Edit institution</h2>
+
+{% if errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+{% endif %}
+
+<table class="table table-striped">
+    <form class="form-horizontal" id="institutionForm" method="post" action="{{base_path}}/institution/{{institution.id}}/update">                         
+        <div class="form-group">
+            <label for="name">Institution name</label>
+            <input class="form-control" type="text" id ="name" name="name" value="{{institution.name}}">
+        </div>
+        <div class="form-group">
+            <label for="picture">Link to picture <i>(Suggested aspect ratio is 16:9)</i></label>
+            <input class="form-control" type="text" id="picture" name="picture" value="{{institution.picture}}">
+        </div>
+        <a href="{{base_path}}/institutions" class="btn btn-default">Cancel</a>
+        <button type="submit" id="save" class="btn btn-primary" style="margin: 5px">Save</button>
+    </form>
+</table>
+
+{% endblock %}

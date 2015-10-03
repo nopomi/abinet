@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Alert for successful add that redirects to this page -->
+{% if message!=null %}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{% endif %}
+
+<!-- List of degrees-->
+
+<h2>Institutions</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID
+            <th>Name</th>
+            <th>Picture</th>
+            <th/>
+            <th/>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for institution in institutions %}
+        <tr>
+            <td>{{institution.id}}</td>
+            <td>{{institution.name}}</td>
+            <td>{{institution.picture}}</td>
+            <td><a class="btn btn-warning" href="{{base_path}}/institution/{{institution.id}}/update">Edit</td>
+            <form method="post" action="{{base_path}}/institution/{{institution.id}}/delete" style="display: inline-block;">
+                <td><button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?');">Remove</button></td>
+            </form>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+<!-- Additional functions -->
+<a href="{{base_path}}/institutions/new" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add new institution</a>
+</div>
+
+
+
+{% endblock %}

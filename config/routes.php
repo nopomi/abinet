@@ -1,5 +1,9 @@
 <?php
 
+function check_logged_in(){
+    BaseController::check_logged_in();
+}
+
 $routes->get('/', function() {
 HelloWorldController::index();
 });
@@ -20,7 +24,11 @@ $routes->post('/login', function() {
 UserController::handle_login();
 });
 
-$routes->get('/mydegrees', function() {
+$routes->post('/logout', function(){
+    UserController::logout();
+});
+
+$routes->get('/mydegrees', 'check_logged_in', function() {
 DegreeController::myDegrees();
 });
 
@@ -54,4 +62,28 @@ DegreeController::delete($id);
 
 $routes->post('/favorite/:id/delete', function($id){
 FavoriteController::delete($id);
+});
+
+$routes->get('/institutions', function(){
+InstitutionController::index();
+});
+
+$routes->get('/institutions/new', function(){
+InstitutionController::create();
+});
+
+$routes->post('/institutions/new', function(){
+InstitutionController::store();
+});
+
+$routes->get('/institution/:id/update', function($id){
+    InstitutionController::edit($id);
+});
+
+$routes->post('/institution/:id/update', function($id){
+    InstitutionController::update($id);
+});
+
+$routes->post('/institution/:id/delete', function($id){
+    InstitutionController::delete($id);
 });

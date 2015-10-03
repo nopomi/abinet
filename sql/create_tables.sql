@@ -5,6 +5,12 @@ CREATE TABLE Applicant(
 	password varchar(50) NOT NULL
 );
 
+CREATE TABLE Admin(
+        id SERIAL PRIMARY KEY,
+        email varchar(100) NOT NULL,
+        password varchar(50) NOT NULL
+);
+
 CREATE TABLE Degree(
 	id SERIAL PRIMARY KEY,
 	name varchar(100) NOT NULL,
@@ -25,7 +31,7 @@ CREATE TABLE Favorite(
 CREATE TABLE Institution(
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100),
-	picture BYTEA
+	picture VARCHAR(300)
 );
 
 CREATE TABLE Degree_Institution(

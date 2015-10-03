@@ -17,6 +17,11 @@
         if(method_exists('BaseController', 'get_user_logged_in')){
           $content['user_logged_in'] = BaseController::get_user_logged_in();
         }
+        
+        //Asetetaan tieto siitä, onko käyttäjä ylläpitäjä
+        if(method_exists('BaseController', 'get_user_admin')){
+            $content['user_admin'] = BaseController::get_user_admin();
+        }
 
         // Tulostetaan Twig:n renderöimä näkymä
         echo $twig->render($view, $content);
