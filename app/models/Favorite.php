@@ -47,10 +47,8 @@ class Favorite extends BaseModel {
     }
 
     public function save(){
-        $query = DB::connection()->prepare('INSERT INTO Favorite (applicant_id, degree_id) VALUES (:applicant_id, :degree_id) RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO Favorite (applicant_id, degree_id) VALUES (:applicant_id, :degree_id)');
         $query->execute(array('applicant_id' => $this->applicant_id, 'degree_id' => $this->degree_id));
-        $row = $query->fetch();
-        $this->id = $row['id'];
     }
 
     public function delete($applicant_id, $degree_id) {

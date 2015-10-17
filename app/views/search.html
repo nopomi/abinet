@@ -3,9 +3,15 @@
 {% block content %}
 
 <!-- Alert for error that redirects to this page -->
-{% if error!=null %}
+{% if error %}
 <div class="alert alert-danger">
     {{error}}
+</div>
+{% endif %}
+
+{% if message %}
+<div class="alert alert-success">
+  {{message}}
 </div>
 {% endif %}
 
@@ -78,7 +84,6 @@
 
 <!-- Search results -->
 
-{% if degrees %}
 <div class="col-xs-11">
 <table class="table table-striped">
     <thead>
@@ -105,7 +110,7 @@
                         data-city="{{degree.city}}" data-extent="{{degree.extent}}" data-institutions="{{degree.institutions}}">
                     <span class="glyphicon glyphicon-info-sign" aria-hidden="true">
                 </button></td>
-                <form method="post" action="{{base_path}}/favorite/{{degree.id}}" style="display: inline-block;">
+                <form method="post" action="{{base_path}}/favorite/{{degree.id}}/new" style="display: inline-block;">
                 <td><button class="btn btn-default" type="submit">
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>Favorite</button></td>
                 </form>
@@ -171,9 +176,5 @@
     })
   })
 </script>
-
-{% else %}
-  <p>Search for degrees above!</p>
-{% endif %}
 
 {% endblock %}

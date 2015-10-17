@@ -60,6 +60,10 @@ $routes->post('/degree/:id/delete', function($id){
 DegreeController::delete($id);
 });
 
+$routes->post('/favorite/:id/new', function($id){
+FavoriteController::store($id);
+});
+
 $routes->post('/favorite/:id/delete', function($id){
 FavoriteController::delete($id);
 });

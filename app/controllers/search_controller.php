@@ -8,7 +8,8 @@
 
     	public function index(){
     		$institutions = Institution::all();
-    		View::make('search.html', array('institutions' => $institutions));
+    		$degrees = Degree::all();
+    		View::make('search.html', array('degrees' => $degrees, 'institutions' => $institutions));
     	}
 
     	public function search(){
@@ -24,7 +25,7 @@
     		if(!is_numeric($accepted_max) || !is_numeric($accepted_min)
     			|| !is_numeric($extent_min) || !is_numeric($extent_max)){
     			View::make('search.html', array('error' => 'Some search parameters were weird, try again!'));
-    		}
+    	}
 
     	$degrees = Degree::search($city, $accepted_max, $accepted_min, $extent_max, $extent_min);
 
@@ -39,9 +40,28 @@
     		}
     	}
 
+    	$keywordMatchingDegrees = array();
+
+    	if(strlen($keyword)>0){
+
+    		foreach ($institutionCorrectDegrees as $degree) {
+    			if(strpos($degree->name, $keyword) !== false || strpos($degree->description, $keyword) !== false){
+    				$keywordMatchingDegrees[] = $degree;
+    				continue;
+    			}
+    			foreach ($degree->institutions as $institution) {
+    				if(strpos($institution->name, $keyword) !== false){
+    					$keywordMatchingDegrees[] = $degree;
+    					break;
+    				}
+    			}
+    		}
+    	} else {
+    		$keywordMatchingDegrees = $institutionCorrectDegrees;
+    	}
 
 
-    	foreach ($degrees as $degree) {
+    	foreach ($keywordMatchingDegrees as $degree) {
     		$institutions = $degree->institutions;
     		$institutionList = "";
     		foreach ($institutions as $institution) {
@@ -52,7 +72,12 @@
 
     	$allInstitutions = Institution::all();
 
-    	View::make('search.html', array('institutions' => $allInstitutions, 'degrees' => $degrees));
+    	if(empty($keywordMatchingDegrees)){
+    		$message = 'No results were found, sorry!';
+    		View::make('search.html', array('institutions' => $allInstitutions, 'message' => $message, 'degrees' => $keywordMatchingDegrees));
+    	}
+
+    	View::make('search.html', array('institutions' => $allInstitutions, 'degrees' => $keywordMatchingDegrees));
     }
 
 }
