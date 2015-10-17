@@ -76,6 +76,41 @@ class Degree extends BaseModel {
         return null;
     }
 
+    public static function search($city, $accepted_max, $accepted_min, $extent_max, $extent_min){
+        if(strlen($city) == 0){
+            $query = DB::connection()->prepare('SELECT * FROM Degree WHERE acceptancerate <= :accepted_max AND acceptancerate >= :accepted_min AND extent <= :extent_max AND extent >= :extent_min');
+            $query->execute(array('accepted_max' => $accepted_max, 'accepted_min' => $accepted_min, 'extent_max' => $extent_max, 'extent_min' => $extent_min));
+        } else {
+            $query = DB::connection()->prepare('SELECT * FROM Degree WHERE city= :city AND acceptancerate <= :accepted_max AND acceptancerate >= :accepted_min AND extent <= :extent_max AND extent >= :extent_min');
+            $query->execute(array('city' => $city, 'accepted_max' => $accepted_max, 'accepted_min' => $accepted_min, 'extent_max' => $extent_max, 'extent_min' => $extent_min));
+        }
+        
+        $rows = $query->fetchAll();
+
+        $degrees = array();
+        foreach ($rows as $row) {
+            $query= DB::connection()->prepare('SELECT * FROM Degree_Institution WHERE degree_id = :id');
+            $query->execute(array('id' => $row['id']));
+            $degree_institutions = $query->fetchAll();
+            $institutions = array();
+            foreach($degree_institutions as $degree_institution){
+                $institutions[] = Institution::find($degree_institution['institution_id']);
+            }
+            $degrees[] = new Degree(array(
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'deadline' => $row['deadline'],
+                'description' => $row['description'],
+                'accepted' => $row['accepted'],
+                'acceptancerate' => $row['acceptancerate'],
+                'city' => $row['city'],
+                'extent' => $row['extent'],
+                'institutions' => $institutions
+                ));
+        }
+        return $degrees;
+    }
+
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Degree (name, description, deadline, accepted, acceptancerate, city, extent) VALUES (:name, :description, :deadline, :accepted, :acceptancerate, :city, :extent) RETURNING id');
         $query->execute(array('name' => $this->name, 'description' => $this->description, 'deadline' => $this->deadline, 'accepted'=>$this->accepted, 'acceptancerate' => $this->acceptancerate, 'city' => $this->city, 'extent' => $this->extent));

@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Alert for error that redirects to this page -->
+{% if error!=null %}
+<div class="alert alert-danger">
+    {{error}}
+</div>
+{% endif %}
+
+<!-- Search fields -->
+
+<div class="panel-group" id="panel-search-options">
+  <div class="panel panel-default">
+    <form class="form" id="searchForm" method="post" action="{{base_path}}/search">
+      <div class="panel-heading">
+        <div class="input-group">
+          <input class="form-control" id="keyword" name="keyword" type="text" placeholder="Search for degrees">
+          <span class="input-group-btn">
+            <button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+          </span>
+        </div>
+        <br/>
+        <a class="btn btn-default" data-toggle="collapse" data-parent="#panel-search-options" href="#collapseOptions">
+          More options
+          <span class="toggle-icon glyphicon glyphicon-plus"></span>
+        </a>
+      </div>
+      <div id="collapseOptions" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="city" class="control-label">City</label>
+            <input class="form-control" type="text" name="city" id="city">
+          </div>
+          <br/>
+          <div class="form-group">
+            <label for="institutions">Institution</label>
+            <br/>
+            {% for institution in institutions %}
+            <input class="form-group" type="checkbox" name="institutions[]" value="{{institution.id}}" checked="" style="padding: 3px">{{institution.name}}
+            {% endfor %}
+          </div>
+          <div class="form-group">
+            <label for="accepted_max" class="control-label">Maximum share of applicants accepted (%)</label>
+            <div class="input-group">
+              <div class="input-group-addon">%</div>
+              <input class="form-control" name="accepted_max" id="accepted_max" type="number" value="100" min="0" max="100">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="accepted_min" class="control-label">Minimun shade of applicants accepted (%)</label>
+            <div class="input-group">
+              <div class="input-group-addon">%</div>
+              <input class="form-control" name="accepted_min" id="accepted_min" type="number" value="0" min="0" max="100">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="extent_max" class="control-label">Maximum extent of degree (ECTS)</label>
+            <div class="input-group">
+              <div class="input-group-addon">%</div>
+              <input class="form-control" name="extent_max" id="extent_min" type="number" value="1000" min="0" max="1000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="extent_min" class="control-label">Minimum extent of degree (ECTS)</label>
+            <div class="input-group">
+              <div class="input-group-addon">%</div>
+              <input class="form-control" name="extent_min" id="extent_min" type="number" value="0" min="0" max="1000">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+<!-- Search results -->
+
+{% if degrees %}
+<div class="col-xs-11">
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Degree</th>
+            <th>Application deadline</th>
+            <th>Location</th>
+            <th>Extent</th>
+            <th/>
+            <th/>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for degree in degrees %}
+        <tr>
+            <td>{{degree.name}}</td>
+            <td>{{degree.deadline}}</td>
+            <td>{{degree.city}}</td>
+            <td>{{degree.extent}} ECTS</td>
+            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#preview" data-id="{{degree.id}}" data-name="{{degree.name}}"
+                        data-deadline="{{degree.deadline}}" data-description="{{degree.description}}"
+                        data-accepted="{{degree.accepted}}" data-acceptancerate="{{degree.acceptancerate}}"
+                        data-city="{{degree.city}}" data-extent="{{degree.extent}}" data-institutions="{{degree.institutions}}">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true">
+                </button></td>
+                <form method="post" action="{{base_path}}/favorite/{{degree.id}}" style="display: inline-block;">
+                <td><button class="btn btn-default" type="submit">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>Favorite</button></td>
+                </form>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+</div>
+
+<!-- Modal with additional info on degree -->
+<div class="modal fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                <h4 class="modal-title" id="myModalLabel" text="">B.Sc. Computer Science</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Education institutions</th>
+                        <td id="institutions" name="institutions">Lappeenranta University of Technology</td>
+                    </tr>
+                    <tr>
+                        <th>Extent of degree</th>
+                        <td id="extent" name="extent" ></td>
+                    </tr>
+                    <tr>
+                        <th>City</th>
+                        <td id="city">Lappeenranta</td>
+                    </tr>
+                    <tr>
+                        <th>Students accepted per year (max)</th>
+                        <td id="accepted">80</td>
+                    </tr>
+                    <tr>
+                        <th>Share of applicants accepted last year</th>
+                        <td id="acceptancerate">33%</td>
+                    </tr>
+                    <tr>
+                        <th>Application deadline</th>
+                        <td id="deadline"></td>
+                    </tr>
+
+                </table>
+
+                <h4>Description</h4>
+                <p id="description">.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('a[data-toggle="collapse"]').click(function () {
+      $(this).find('span.toggle-icon').toggleClass('glyphicon-plus glyphicon-minus');
+    })
+  })
+</script>
+
+{% else %}
+  <p>Search for degrees above!</p>
+{% endif %}
+
+{% endblock %}

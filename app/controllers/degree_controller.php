@@ -144,4 +144,8 @@
            View::make('/suunnitelmat/mydegrees.html', array('degrees' => $degrees));
        }
 
+       public static function filter($){
+
+       }
+
    }

@@ -34,10 +34,10 @@
                         data-deadline="{{degree.deadline}}" data-description="{{degree.description}}"
                         data-accepted="{{degree.accepted}}" data-acceptancerate="{{degree.acceptancerate}}"
                         data-city="{{degree.city}}" data-extent="{{degree.extent}}" data-institutions="{{degree.institutions}}">
-                    More info
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></td>
                 </button></td>
             <form method="post" action="{{base_path}}/favorite/{{degree.id}}/delete" style="display: inline-block;">
-                <td><button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?');">Remove</button></td>
+                <td><button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></td></button></td>
             </form>
         </tr>
         {% endfor %}
@@ -46,8 +46,6 @@
 	</tbody>
 
 </table>
-
-<!-- Modal with additional info on degree -->
 
 <!-- Modal with additional info on degree -->
 <div class="modal fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

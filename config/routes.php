@@ -107,3 +107,11 @@ $routes->post('/suggestion/:id/update', function($id){
 $routes->post('/suggestion/:id/delete', function($id){
 	SuggestionController::delete($id);
 });
+
+$routes->get('/search', function(){
+	SearchController::index();
+});
+
+$routes->post('/search', function(){
+	SearchController::search();
+});
