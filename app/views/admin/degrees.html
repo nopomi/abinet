@@ -44,11 +44,11 @@
                         data-deadline="{{degree.deadline}}" data-description="{{degree.description}}"
                         data-accepted="{{degree.accepted}}" data-acceptancerate="{{degree.acceptancerate}}"
                         data-city="{{degree.city}}" data-extent="{{degree.extent}}" data-institutions="{{degree.institutions}}">
-                    More info
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true">
                 </button></td>
-            <td><a class="btn btn-warning" href="{{base_path}}/degree/{{degree.id}}/update">Edit</td>
+            <td><a class="btn btn-warning" href="{{base_path}}/degree/{{degree.id}}/update"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></td>
             <form method="post" action="{{base_path}}/degree/{{degree.id}}/delete" style="display: inline-block;">
-                <td><button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?');">Remove</button></td>
+                <td><button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></button></td>
             </form>
         </tr>
         {% endfor %}

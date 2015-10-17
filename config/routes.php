@@ -87,3 +87,23 @@ $routes->post('/institution/:id/update', function($id){
 $routes->post('/institution/:id/delete', function($id){
     InstitutionController::delete($id);
 });
+
+$routes->get('/suggestions', function(){
+	SuggestionController::index();
+});
+
+$routes->get('/suggestion/new', function(){
+	SuggestionController::create();
+});
+
+$routes->post('/suggestion/new', function(){
+	SuggestionController::store();
+});
+
+$routes->post('/suggestion/:id/update', function($id){
+	SuggestionController::toggleProcessed($id);
+});
+
+$routes->post('/suggestion/:id/delete', function($id){
+	SuggestionController::delete($id);
+});

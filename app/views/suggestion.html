@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<h2>New Suggestion</h2>
+
+{% if errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+{% endif %}
+  
+<table class="table table-striped">
+    <form class="form-horizontal" id="suggestionForm" method="post" action="{{base_path}}/suggestion/new">                         
+        <div class="form-group">
+            <label for="description">Description</label>
+            <p class="help-block">Write a short description of what you want to change in abinet.</p>
+            <textarea class="form-control" type="text" name="description" id="description" placeholder="'Change the name of the Master's of Samurai degree to Samurai Master'">{{attributes.description}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="justification">Justification</label> 
+            <p class="help-block">Explain why this change would be justified or important.</p>
+            <textarea class="form-control" type="text" name="justification" id="justification" placeholder="'The name of the degree has changed, here is the source: www.tut.fi'">{{attributes.justification}}</textarea>
+        </div>
+        <a href="{{base_path}}/home" class="btn btn-default">Cancel</a>
+        <button type="submit" id="save" class="btn btn-primary" style="margin: 5px">Send suggestion</button>
+    </form>
+
+</table>
+
+
+
+{% endblock %}

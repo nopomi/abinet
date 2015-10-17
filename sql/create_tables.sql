@@ -46,4 +46,4 @@ CREATE TABLE Suggestion(
 	description varchar(500),
 	justification varchar(500),
 	processed boolean DEFAULT FALSE
-	);
+);

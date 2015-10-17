@@ -33,7 +33,7 @@
             <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#preview" data-id="{{degree.id}}" data-name="{{degree.name}}"
                         data-deadline="{{degree.deadline}}" data-description="{{degree.description}}"
                         data-accepted="{{degree.accepted}}" data-acceptancerate="{{degree.acceptancerate}}"
-                        data-city="{{degree.city}}" data-extent="{{degree.extent}}">
+                        data-city="{{degree.city}}" data-extent="{{degree.extent}}" data-institutions="{{degree.institutions}}">
                     More info
                 </button></td>
             <form method="post" action="{{base_path}}/favorite/{{degree.id}}/delete" style="display: inline-block;">
@@ -60,9 +60,9 @@
             <div class="modal-body">
                 <table class="table table-striped">
                     <tr>
-                        <th>Education institute</th>
+                        <th>Education institute(s)</th>
                         <!-- have not yet figured out how to get institution value from the many-to-many relationship -->
-                        <td>Lappeenranta University of Technology</td>
+                        <td id="institutions" name="institutions">Lappeenranta University of Technology</td>
                     </tr>
                     <tr>
                         <th>Extent of degree</th>

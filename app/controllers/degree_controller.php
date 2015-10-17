@@ -132,6 +132,14 @@
                 foreach ($favorites as $favorite) {
                    $degrees[] = Degree::find($favorite->degree_id);
                }
+               foreach ($degrees as $degree) {
+                $institutions = $degree->institutions;
+                $institutionList = "";
+                foreach ($institutions as $institution) {
+                    $institutionList = $institutionList . $institution->name . "\n";
+                }
+                $degree->institutions = $institutionList;
+            }
            }
            View::make('/suunnitelmat/mydegrees.html', array('degrees' => $degrees));
        }

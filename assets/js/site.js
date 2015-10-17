@@ -1,4 +1,5 @@
-$(document).ready(function () {
+$(document).ready(
+    function () {
     $('#preview').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var name = button.data('name');
@@ -19,6 +20,20 @@ $(document).ready(function () {
     document.getElementById('acceptancerate').innerHTML = acceptancerate*100 + " %";
     document.getElementById('city').innerHTML = city;
     document.getElementById('institutions').innerHTML = institutions;
-    
     });
+    
+    $('#suggestion').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var creationtime = button.data('creationtime');
+    var description = button.data('description');
+    var justification = button.data('justification');
+    var modal = $(this);
+    
+    document.getElementById('creationtime').innerHTML = creationtime;
+    document.getElementById('description').innerHTML = description;
+    document.getElementById('justification').innerHTML = justification;
+
 });
+
+});
+
