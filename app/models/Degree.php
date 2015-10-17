@@ -8,12 +8,12 @@
 class Degree extends BaseModel {
 
     public $id, $name, $deadline, $description,
-            $accepted, $acceptancerate, $city, $extent;
+    $accepted, $acceptancerate, $city, $extent, $institutions;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
         $this->validators = array('validate_name', 'validate_description', 'validate_city', 'validate_extent',
-            'validate_acceptancerate');
+            'validate_acceptancerate', 'validate_institutions');
     }
 
     public static function all() {
@@ -23,6 +23,13 @@ class Degree extends BaseModel {
         $degrees = array();
 
         foreach ($rows as $row) {
+            $query= DB::connection()->prepare('SELECT * FROM Degree_Institution WHERE degree_id = :id');
+            $query->execute(array('id' => $row['id']));
+            $degree_institutions = $query->fetchAll();
+            $institutions = array();
+            foreach($degree_institutions as $degree_institution){
+                $institutions[] = Institution::find($degree_institution['institution_id']);
+            }
             $degrees[] = new Degree(array(
                 'id' => $row['id'],
                 'name' => $row['name'],
@@ -31,8 +38,9 @@ class Degree extends BaseModel {
                 'accepted' => $row['accepted'],
                 'acceptancerate' => $row['acceptancerate'],
                 'city' => $row['city'],
-                'extent' => $row['extent']
-            ));
+                'extent' => $row['extent'],
+                'institutions' => $institutions
+                ));
         }
         return $degrees;
     }
@@ -43,6 +51,14 @@ class Degree extends BaseModel {
         $row = $query->fetch();
 
         if ($row) {
+            $query= DB::connection()->prepare('SELECT * FROM Degree_Institution WHERE degree_id = :id');
+            $query->execute(array('id' => $row['id']));
+            $degree_institutions = $query->fetchAll();
+            $institutions = array();
+            foreach ($degree_institutions as $degree_institution) {
+                $institution = Institution::find($degree_institution['institution_id']);
+                $institutions[] = $institution;
+            }
             $degree = new Degree(array(
                 'id' => $row['id'],
                 'name' => $row['name'],
@@ -51,8 +67,9 @@ class Degree extends BaseModel {
                 'accepted' => $row['accepted'],
                 'acceptancerate' => $row['acceptancerate'],
                 'city' => $row['city'],
-                'extent' => $row['extent']
-            ));
+                'extent' => $row['extent'],
+                'institutions' => $institutions
+                ));
             return $degree;
         }
 
@@ -65,13 +82,28 @@ class Degree extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
     }
+
+    public function saveInstitutions($institutions){
+        foreach ($institutions as $institutionId) {
+            $query = DB::connection()->prepare('INSERT INTO Degree_Institution(degree_id, institution_id) VALUES (:degree_id, :institution_id)');
+            $query->execute(array('degree_id' => $this->id, 'institution_id' => $institutionId));
+        }
+    }
     
     public function update() {
         $query = DB::connection()->prepare('UPDATE Degree SET name= :name, description= :description, deadline= :deadline, accepted= :accepted, acceptancerate= :acceptancerate, city= :city, extent= :extent WHERE id = :id');
         $query->execute(array('id' => $this->id, 'name' => $this->name, 'description' => $this->description, 'deadline' => $this->deadline, 'accepted'=>$this->accepted, 'acceptancerate' => $this->acceptancerate, 'city' => $this->city, 'extent' => $this->extent));
     }
+
+    public function updateInstitutions($institutionIds){
+        $query = DB::connection()->prepare('DELETE FROM Degree_Institution WHERE degree_id= :id');
+        $query->execute(array('id' => $this->id));
+        $this->saveInstitutions($institutionIds);
+    }
     
     public function delete() {
+        $query = DB::connection()->prepare('DELETE FROM Degree_Institution WHERE degree_id= :id');
+        $query->execute(array('id' => $this->id));
         $query = DB::connection()->prepare('DELETE FROM Degree WHERE id= :id');
         $query->execute(array('id' => $this->id));
     }
@@ -121,6 +153,14 @@ class Degree extends BaseModel {
         $valid = $this->validate_number_size($this->acceptancerate, 0, 10);
         if($valid == false){
             $errors[] = 'Check the share of accepted applicants (should be 0-10)';
+        }
+        return $errors;
+    }
+
+    public function validate_institutions(){
+        $errors = array();
+        if(empty($this -> institutions)){
+            $errors[] = 'Please select one or more institutions.!';
         }
         return $errors;
     }

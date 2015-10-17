@@ -50,7 +50,6 @@ class InstitutionController extends BaseController {
             'picture' => $params['picture']
         ));
         
-        Kint::dump($institution);
         
         $errors = $institution->errors();
 

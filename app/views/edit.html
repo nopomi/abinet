@@ -5,44 +5,51 @@
 <h2>Modify Degree</h2>
 
 {% if errors %}
-    <div class="alert alert-danger">
-      <ul>
-        {% for error in errors %}
-          <li>{{error}}</li>
-        {% endfor %}
-      </ul>
-    </div>
+<div class="alert alert-danger">
+	<ul>
+		{% for error in errors %}
+		<li>{{error}}</li>
+		{% endfor %}
+	</ul>
+</div>
 {% endif %}
 
 <table class="table table-striped">
 	<form class="form-horizontal" id="editForm" method="post" action="{{base_path}}/degree/{{degree.id}}/update">                         
 		<div class="form-group">
 			<label for="name">Degree name</label>
-				<input class="form-control" type="text" id ="name" name="name" value="{{degree.name}}">
+			<input class="form-control" type="text" id ="name" name="name" value="{{degree.name}}">
+		</div>
+		<div class="form-group">
+			<label for="institutions">Institutions</label>
+			<br/>
+			{% for institution in institutions %}
+			<input class="form-group" type="checkbox" name="institutions[]" value="{{institution.id}}" {% if institution.id in degree.institutions %} checked="" {% endif %} > {{institution.name}}<br/>
+			{% endfor %}
 		</div>
 		<div class="form-group">
 			<label for="extent">Extent (ECTS)</label>
-				<input class="form-control" type="text" name="extent" id="extent" value="{{degree.extent}}">
+			<input class="form-control" type="text" name="extent" id="extent" value="{{degree.extent}}">
 		</div>
 		<div class="form-group">
 			<label for="city">City</label> 
-				<input class="form-control" type="text" name="city" id="city" value="{{degree.city}}">
+			<input class="form-control" type="text" name="city" id="city" value="{{degree.city}}">
 		</div>
 		<div class="form-group">
 			<label cfor="accepted">Accepted students per year (max)</label> 
-				<input class="form-control" type="text" name="accepted" id="accepted" value="{{degree.accepted}}">
+			<input class="form-control" type="text" name="accepted" id="accepted" value="{{degree.accepted}}">
 		</div>
 		<div class="form-group">
 			<label for="acceptancerate">Share of applicants (decimal)</label> 
-				<input class="form-control" type="text" name="acceptancerate" id="acceptancerate" value="{{degree.acceptancerate}}">
+			<input class="form-control" type="text" name="acceptancerate" id="acceptancerate" value="{{degree.acceptancerate}}">
 		</div>
 		<div class="form-group">
-		<label for="deadline">Application deadline</label> 
-				<input class="form-control" type="text" name="deadline" id="deadline" value="{{degree.deadline}}">
+			<label for="deadline">Application deadline</label> 
+			<input class="form-control" type="text" name="deadline" id="deadline" value="{{degree.deadline}}">
 		</div>
 		<div class="form-group">
-		<label>Description</label> 
-				<textarea class="form-control" name="description" id="description">{{degree.description}}</textarea>
+			<label>Description</label> 
+			<textarea class="form-control" name="description" id="description">{{degree.description}}</textarea>
 		</div>
 		<a href="{{base_path}}/degrees" class="btn btn-default">Cancel</a>
 		<button type="submit" id="save" class="btn btn-primary" style="margin: 5px">Save changes</button>

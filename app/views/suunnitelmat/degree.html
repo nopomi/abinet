@@ -19,7 +19,14 @@
     <form class="form-horizontal" id="degreeForm" method="post" action="{{base_path}}/degrees/new">                         
         <div class="form-group">
             <label for="name">Degree name</label>
-            <input class="form-control" type="text" id ="name" name="name" placeholder="'B.Sc. Physics'" value="{{attributes.name}}">
+            <input class="form-control" type="text" id="name" name="name" placeholder="'B.Sc. Physics'" value="{{attributes.name}}">
+        </div>
+        <div class="form-group">
+            <label for="institutions">Institutions</label>
+            <br/>
+            {% for institution in institutions %}
+                <input class="form-group" type="checkbox" name="institutions[]" value="{{institution.id}}" {% if institution.id in attributes.institutions %} checked="" {% endif %} > {{institution.name}}<br/>
+            {% endfor %}
         </div>
         <div class="form-group">
             <label for="extent">Extent (ECTs)</label>

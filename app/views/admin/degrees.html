@@ -4,10 +4,17 @@
 
 <h2>Degrees</h2>
 
-<!-- Alert for successful add that redirects to this page -->
+<!-- Alert for successful modification that redirects to this page -->
 {% if message!=null %}
 <div class="alert alert-success">
     {{message}}
+</div>
+{% endif %}
+
+<!-- Alert for error that redirects to this page -->
+{% if error!=null %}
+<div class="alert alert-danger">
+    {{error}}
 </div>
 {% endif %}
 
@@ -36,7 +43,7 @@
             <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#preview" data-id="{{degree.id}}" data-name="{{degree.name}}"
                         data-deadline="{{degree.deadline}}" data-description="{{degree.description}}"
                         data-accepted="{{degree.accepted}}" data-acceptancerate="{{degree.acceptancerate}}"
-                        data-city="{{degree.city}}" data-extent="{{degree.extent}}">
+                        data-city="{{degree.city}}" data-extent="{{degree.extent}}" data-institutions="{{degree.institutions}}">
                     More info
                 </button></td>
             <td><a class="btn btn-warning" href="{{base_path}}/degree/{{degree.id}}/update">Edit</td>
@@ -63,9 +70,8 @@
             <div class="modal-body">
                 <table class="table table-striped">
                     <tr>
-                        <th>Education institute</th>
-                        <!-- have not yet figured out how to get institution value from the many-to-many relationship -->
-                        <td>Lappeenranta University of Technology</td>
+                        <th>Education institutions</th>
+                        <td id="institutions" name="institutions">Lappeenranta University of Technology</td>
                     </tr>
                     <tr>
                         <th>Extent of degree</th>

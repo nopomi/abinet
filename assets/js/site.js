@@ -8,6 +8,7 @@ $(document).ready(function () {
     var acceptancerate = button.data('acceptancerate');
     var city = button.data('city');
     var extent = button.data('extent');
+    var institutions = button.data('institutions');
     var modal = $(this);
     modal.find('.modal-title').text(name);
     
@@ -17,7 +18,7 @@ $(document).ready(function () {
     document.getElementById('accepted').innerHTML = accepted;
     document.getElementById('acceptancerate').innerHTML = acceptancerate*100 + " %";
     document.getElementById('city').innerHTML = city;
+    document.getElementById('institutions').innerHTML = institutions;
     
-    //TODO: Figure out how to get the education institute into this (has many-to-many relationship). Needs AJAX?
     });
 });

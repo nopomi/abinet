@@ -6,7 +6,12 @@ INSERT INTO DEGREE (name, description, deadline, accepted, acceptancerate, city,
 INSERT INTO DEGREE (name, description, deadline, accepted, acceptancerate, city, extent) VALUES ('Ph.D. Molecular Neuroscience', 'Very difficult and intricate degree.', '2015-10-10', 5, 0.1, 'Helsinki', 120);
 INSERT INTO DEGREE (name, description, deadline, accepted, acceptancerate, city, extent) VALUES ('Ph.D. Molecular Neuroscience', 'Very difficult and intricate degree.', '2015-10-10', 5, 0.1, 'Helsinki', 120);
 INSERT INTO SUGGESTION (creationtime, description, justification, processed) VALUES (NOW(), 'delete system', 'it sux', FALSE);
-INSERT INTO INSTITUTION(name, picture) VALUES ('Lappeenranta University of Tech', 'link');
+INSERT INTO INSTITUTION(name, picture) VALUES ('Lappeenranta University of Tech', 'http://clanfa.com/dundy/mideluola/tsoha/Lappeenranta_Universty_of_Technology.jpg');
+INSERT INTO INSTITUTION(name, picture) VALUES ('University of Helsinki', 'http://clanfa.com/dundy/mideluola/tsoha/Helsinki_University.jpg');
+INSERT INTO INSTITUTION(name, picture) VALUES ('Aalto University', 'http://clanfa.com/dundy/mideluola/tsoha/Aalto_University.jpg');
+INSERT INTO DEGREE_INSTITUTION(degree_id, institution_id) VALUES (1, 1);
+INSERT INTO DEGREE_INSTITUTION(degree_id, institution_id) VALUES (2, 2);
+INSERT INTO DEGREE_INSTITUTION(degree_id, institution_id) VALUES (3, 3);
 INSERT INTO FAVORITE(applicant_id, degree_id) VALUES (2, 1);
 INSERT INTO FAVORITE(applicant_id, degree_id) VALUES (2, 2);
 INSERT INTO FAVORITE(applicant_id, degree_id) VALUES (2, 3);
