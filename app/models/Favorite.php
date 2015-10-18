@@ -19,13 +19,7 @@ class Favorite extends BaseModel {
         $query->execute(array('id' => $id));
         $rows = $query->fetchAll();
 
-        $favorites = array();
-        foreach ($rows as $row) {
-            $favorites[] = new Favorite(array(
-                'applicant_id' => $row['applicant_id'],
-                'degree_id' => $row['degree_id']
-            ));
-        }
+        $favorites = self::makeFavoriteObjectsFromQuery($rows);
 
         return $favorites;
     }
@@ -34,14 +28,8 @@ class Favorite extends BaseModel {
         $query = DB::connection()->prepare('SELECT * FROM Favorite WHERE degree_id= :id');
         $query->execute(array('id' => $degreeId));
         $rows = $query->fetchAll();
-        $favorites = array();
 
-        foreach ($rows as $row) {
-            $favorites[] = new Favorite(array(
-                'applicant_id' => $row['applicant_id'],
-                'degree_id' => $row['degree_id']
-            ));
-        }
+        $favorites = self::makeFavoriteObjectsFromQuery($rows);
 
         return $favorites;
     }
@@ -54,6 +42,17 @@ class Favorite extends BaseModel {
     public function delete($applicant_id, $degree_id) {
         $query = DB::connection()->prepare('DELETE FROM Favorite WHERE applicant_id= :applicant_id AND degree_id= :degree_id');
         $query->execute(array('applicant_id' => $applicant_id, 'degree_id' => $degree_id));
+    }
+
+    private static function makeFavoriteObjectsFromQuery($rows){
+        $favorites = array();
+        foreach ($rows as $row) {
+            $favorites[] = new Favorite(array(
+                'applicant_id' => $row['applicant_id'],
+                'degree_id' => $row['degree_id']
+            ));
+        }
+        return $favorites;
     }
 
 }

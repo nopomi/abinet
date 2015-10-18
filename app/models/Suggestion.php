@@ -71,18 +71,18 @@ class Suggestion extends BaseModel {
 
 	public function validate_justification(){
 		$errors = array();
-		$valid = $this->validate_string_length($this->justification, 5);
+		$valid = $this->validate_string_length($this->justification, 5, 500);
 		if($valid == false){
-			$errors[] = 'Please fill out a short justification for the change.';
+			$errors[] = 'Please fill out a short justification for the change (5-500 characters).';
 		}
 		return $errors;
 	}
 
 	public function validate_description(){
 		$errors = array();
-		$valid = $this->validate_string_length($this->description, 20);
+		$valid = $this->validate_string_length($this->description, 5, 500);
 		if($valid == false){
-			$errors[] = 'Please add a description of your suggestion (20+ characters).';
+			$errors[] = 'Please add a description of your suggestion (5-500 characters).';
 		}
 		return $errors;
 	}

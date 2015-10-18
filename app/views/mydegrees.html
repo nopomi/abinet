@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- List of degrees-->
+
+<h1>My Degrees</h1>
+
+{% if message!=null %}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{% endif %}
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Degree</th>
+			<th>Application deadline</th>
+			<th>Location</th>
+                        <th>Extent</th>
+			<th/>
+			<th/>
+		</tr>
+	</thead>
+
+	<tbody>
+
+        {% for degree in degrees %}
+        <tr>
+            <td>{{degree.name}}</td>
+            <td>{{degree.deadline}}</td>
+            <td>{{degree.city}}</td>
+            <td>{{degree.extent}} ECTS</td>
+            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#preview" data-id="{{degree.id}}" data-name="{{degree.name}}"
+                        data-deadline="{{degree.deadline}}" data-description="{{degree.description}}"
+                        data-accepted="{{degree.accepted}}" data-acceptancerate="{{degree.acceptancerate}}"
+                        data-city="{{degree.city}}" data-extent="{{degree.extent}}" data-institutions="{{degree.institutions}}">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></td>
+                </button></td>
+            <form method="post" action="{{base_path}}/favorite/{{degree.id}}/delete" style="display: inline-block;">
+                <td><button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></td></button></td>
+            </form>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+	</tbody>
+
+</table>
+
+<!-- Modal with additional info on degree -->
+{{ include('degreemodal.html') }}
+
+{% endblock %}

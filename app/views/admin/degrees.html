@@ -60,52 +60,6 @@
 <a href="{{base_path}}/degrees/new" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add new degree</a>
 
 <!-- Modal with additional info on degree -->
-<div class="modal fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel" text="">B.Sc. Computer Science</h4>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped">
-                    <tr>
-                        <th>Education institutions</th>
-                        <td id="institutions" name="institutions">Lappeenranta University of Technology</td>
-                    </tr>
-                    <tr>
-                        <th>Extent of degree</th>
-                        <td id="extent" name="extent" ></td>
-                    </tr>
-                    <tr>
-                        <th>City</th>
-                        <td id="city">Lappeenranta</td>
-                    </tr>
-                    <tr>
-                        <th>Students accepted per year (max)</th>
-                        <td id="accepted">80</td>
-                    </tr>
-                    <tr>
-                        <th>Share of applicants accepted last year</th>
-                        <td id="acceptancerate">33%</td>
-                    </tr>
-                    <tr>
-                        <th>Application deadline</th>
-                        <td id="deadline"></td>
-                    </tr>
-
-                </table>
-
-                <h4>Description</h4>
-                <p id="description">.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+{{ include('degreemodal.html') }}
 
 {% endblock %}

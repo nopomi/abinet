@@ -66,18 +66,18 @@ class Institution extends BaseModel {
 
     public function validate_name() {
         $errors = array();
-        $valid = $this->validate_string_length($this->name, 3);
+        $valid = $this->validate_string_length($this->name, 3, 100);
         if ($valid == false) {
-            $errors[] = 'The name is too short, has to be at least 3 characters';
+            $errors[] = 'The name should be between 3 and 100 characters long.';
         }
         return $errors;
     }
 
     public function validate_picture() {
         $errors = array();
-        $valid = $this->validate_string_length($this->picture, 10);
+        $valid = $this->validate_string_length($this->picture, 8, 300);
         if ($valid == false) {
-            $errors[] = 'Please put in a link to a picture! You can host pictures on imgur.com.';
+            $errors[] = 'Please put in a link to a picture! You can host pictures on imgur.com (max 300 chars).';
         }
         return $errors;
     }

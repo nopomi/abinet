@@ -20,28 +20,8 @@ class Degree extends BaseModel {
         $query = DB::connection()->prepare('SELECT * FROM Degree');
         $query->execute();
         $rows = $query->fetchAll();
-        $degrees = array();
-
-        foreach ($rows as $row) {
-            $query= DB::connection()->prepare('SELECT * FROM Degree_Institution WHERE degree_id = :id');
-            $query->execute(array('id' => $row['id']));
-            $degree_institutions = $query->fetchAll();
-            $institutions = array();
-            foreach($degree_institutions as $degree_institution){
-                $institutions[] = Institution::find($degree_institution['institution_id']);
-            }
-            $degrees[] = new Degree(array(
-                'id' => $row['id'],
-                'name' => $row['name'],
-                'deadline' => $row['deadline'],
-                'description' => $row['description'],
-                'accepted' => $row['accepted'],
-                'acceptancerate' => $row['acceptancerate'],
-                'city' => $row['city'],
-                'extent' => $row['extent'],
-                'institutions' => $institutions
-                ));
-        }
+        
+        $degrees = self::makeDegreeObjectsFromQueryRows($rows);
         return $degrees;
     }
 
@@ -87,27 +67,8 @@ class Degree extends BaseModel {
         
         $rows = $query->fetchAll();
 
-        $degrees = array();
-        foreach ($rows as $row) {
-            $query= DB::connection()->prepare('SELECT * FROM Degree_Institution WHERE degree_id = :id');
-            $query->execute(array('id' => $row['id']));
-            $degree_institutions = $query->fetchAll();
-            $institutions = array();
-            foreach($degree_institutions as $degree_institution){
-                $institutions[] = Institution::find($degree_institution['institution_id']);
-            }
-            $degrees[] = new Degree(array(
-                'id' => $row['id'],
-                'name' => $row['name'],
-                'deadline' => $row['deadline'],
-                'description' => $row['description'],
-                'accepted' => $row['accepted'],
-                'acceptancerate' => $row['acceptancerate'],
-                'city' => $row['city'],
-                'extent' => $row['extent'],
-                'institutions' => $institutions
-                ));
-        }
+        $degrees = self::makeDegreeObjectsFromQueryRows($rows);
+        
         return $degrees;
     }
 
@@ -165,9 +126,9 @@ class Degree extends BaseModel {
     
     public function validate_description(){
         $errors = array();
-        $valid = $this->validate_string_length($this->description, 10);
+        $valid = $this->validate_string_length($this->description, 10, 2000);
         if($valid == false){
-            $errors[] = 'The description should be at least 10 characters long';
+            $errors[] = 'The description should be between 10 and 2000 characters long.';
         }
         return $errors;
     }
@@ -183,9 +144,9 @@ class Degree extends BaseModel {
     
     public function validate_city(){
         $errors = array();
-        $valid = $this->validate_string_length($this->city, 1);
+        $valid = $this->validate_string_length($this->city, 1, 80);
         if($valid == false){
-            $errors[] = 'Please fill out a city';
+            $errors[] = 'Please fill out a city (max 80 characters).';
         }
         return $errors;
     }
@@ -209,6 +170,34 @@ class Degree extends BaseModel {
             $errors[] = 'Please select one or more institutions.!';
         }
         return $errors;
+    }
+
+    private static function makeDegreeObjectsFromQueryRows($rows){
+
+        $degrees = array();
+        foreach ($rows as $row) {
+            $query= DB::connection()->prepare('SELECT * FROM Degree_Institution WHERE degree_id = :id');
+            $query->execute(array('id' => $row['id']));
+            $degree_institutions = $query->fetchAll();
+            $institutions = array();
+            foreach($degree_institutions as $degree_institution){
+                $institutions[] = Institution::find($degree_institution['institution_id']);
+            }
+            $degrees[] = new Degree(array(
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'deadline' => $row['deadline'],
+                'description' => $row['description'],
+                'accepted' => $row['accepted'],
+                'acceptancerate' => $row['acceptancerate'],
+                'city' => $row['city'],
+                'extent' => $row['extent'],
+                'institutions' => $institutions
+                ));
+        }
+
+        return $degrees;
+
     }
 
 }

@@ -33,4 +33,17 @@ class FavoriteController extends BaseController {
 
     	Redirect::to('/search', array('message' => 'Degree saved to favorites!'));
     }
+
+    public static function getUserFavorites(){
+        $user = self::get_user_logged_in();
+        $favorites = array();
+            if($user){
+                $unprocessedFavorites = Favorite::findByUser($user->id);
+                foreach ($unprocessedFavorites as $favorite) {
+                    $favorites[] = $favorite->degree_id;
+                }
+            }
+        return $favorites;
+    }
+
 }

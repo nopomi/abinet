@@ -13,7 +13,8 @@
                 $institutions = $degree->institutions;
                 $institutionList = "";
                 foreach ($institutions as $institution) {
-                    $institutionList = $institutionList . $institution->name . "\n";
+                    $institutionList = $institutionList . $institution->name;
+                    $institutionList = $institutionList . "\n";
                 }
                 $degree->institutions = $institutionList;
             }
@@ -22,30 +23,13 @@
 
         public static function create() {
             $institutions = Institution::all();
-            View::make('/suunnitelmat/degree.html', array('institutions' => $institutions));
+            View::make('/admin/degree.html', array('institutions' => $institutions));
         }
 
         public static function store() {
             $params = $_POST;
 
-            $degree = new Degree(array(
-                'name' => $params['name'],
-                'extent' => $params['extent'],
-                'city' => $params['city'],
-                'accepted' => $params['accepted'],
-                'acceptancerate' => $params['acceptancerate'],
-                'deadline' => $params['deadline'],
-                'description' => $params['description'],
-                'institutions' => null
-                ));
-
-            $institutions = array();
-            if(isset($params['institutions'])){
-                foreach ($params['institutions'] as $institutionId) {
-                    $institutions[] = Institution::find($institutionId);
-                }
-            }
-            $degree->institutions = $institutions;
+            $degree = self::createDegree($params, $id);
 
             $errors = $degree->errors();
 
@@ -58,7 +42,7 @@
                 if(isset($params['institutions'])){
                     $degree->institutions = $params['institutions'];
                 }
-                View::make('suunnitelmat/degree.html', array('errors' => $errors, 'attributes' => $params, 'institutions' => $allInstitutions));
+                View::make('admin/degree.html', array('errors' => $errors, 'attributes' => $params, 'institutions' => $allInstitutions));
             }
         }
 
@@ -77,25 +61,7 @@
 
             $params = $_POST;
 
-            $degree = new Degree(array(
-                'id' => $id,
-                'name' => $params['name'],
-                'extent' => $params['extent'],
-                'city' => $params['city'],
-                'accepted' => $params['accepted'],
-                'acceptancerate' => $params['acceptancerate'],
-                'deadline' => $params['deadline'],
-                'description' => $params['description'],
-                'institutions' => null
-                ));
-
-            $institutions = array();
-            if(isset($params['institutions'])){
-                foreach ($params['institutions'] as $institutionId) {
-                    $institutions[] = Institution::find($institutionId);
-                }
-            }
-            $degree->institutions = $institutions;
+            $degree = self::createDegree($params, $id);
 
             $errors = $degree->errors();
 
@@ -136,12 +102,38 @@
                 $institutions = $degree->institutions;
                 $institutionList = "";
                 foreach ($institutions as $institution) {
-                    $institutionList = $institutionList . $institution->name . "\n";
+                    $institutionList = $institutionList . $institution->name;
+                    $institutionList = $institutionList . "\n";
                 }
                 $degree->institutions = $institutionList;
             }
            }
-           View::make('/suunnitelmat/mydegrees.html', array('degrees' => $degrees));
+           View::make('mydegrees.html', array('degrees' => $degrees));
+       }
+
+       private static function createDegree($params, $id){
+
+        $degree = new Degree(array(
+                'id' => $id,
+                'name' => $params['name'],
+                'extent' => $params['extent'],
+                'city' => $params['city'],
+                'accepted' => $params['accepted'],
+                'acceptancerate' => $params['acceptancerate'],
+                'deadline' => $params['deadline'],
+                'description' => $params['description'],
+                'institutions' => null
+                ));
+
+            $institutions = array();
+            if(isset($params['institutions'])){
+                foreach ($params['institutions'] as $institutionId) {
+                    $institutions[] = Institution::find($institutionId);
+                }
+            }
+            $degree->institutions = $institutions;
+
+            return $degree;
        }
 
    }

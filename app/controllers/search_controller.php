@@ -9,18 +9,14 @@
     	public function index(){
     		$institutions = Institution::all();
     		$degrees = Degree::all();
-            $user = self::get_user_logged_in();
-            $favorites = array();
-            if($user){
-                $unprocessedFavorites = Favorite::findByUser($user->id);
-                foreach ($unprocessedFavorites as $favorite) {
-                    $favorites[] = $favorite->degree_id;
-                }
-            }
+            self::makeInstitutionsStrings($degrees);
+            $favorites = FavoriteController::getUserFavorites();
     		View::make('search.html', array('degrees' => $degrees, 'institutions' => $institutions, 'favorites' => $favorites));
     	}
 
     	public function search(){
+
+            // Pick up parameters
     		$params = $_POST;
     		$keyword = $params['keyword'];
     		$city = $params['city'];
@@ -30,62 +26,80 @@
     		$extent_max = $params['extent_max'];
     		$extent_min = $params['extent_min'];
 
+            //check number values are valid
     		if(!is_numeric($accepted_max) || !is_numeric($accepted_min)
     			|| !is_numeric($extent_min) || !is_numeric($extent_max)){
     			View::make('search.html', array('error' => 'Some search parameters were weird, try again!'));
-    	}
+    	   }
 
-    	$degrees = Degree::search($city, $accepted_max, $accepted_min, $extent_max, $extent_min);
+           //Find degrees that match the city and numeric parameters
+    	   $degrees = Degree::search($city, $accepted_max, $accepted_min, $extent_max, $extent_min);
 
-    	$institutionCorrectDegrees = array();
+    	   $institutionCorrectDegrees = array();
 
-    	foreach ($degrees as $degree) {
-    		foreach ($degree->institutions as $degreeInstitution) {
+            //filter the results that contain correct institution
+    	   foreach ($degrees as $degree) {
+    		  foreach ($degree->institutions as $degreeInstitution) {
     			if(in_array($degreeInstitution->id, $institutions)){
     				$institutionCorrectDegrees[] = $degree;
     				break;
-    			}
-    		}
-    	}
+    			 }
+    		  }
+    	   }
 
-    	$keywordMatchingDegrees = array();
 
-    	if(strlen($keyword)>0){
-
-    		foreach ($institutionCorrectDegrees as $degree) {
-    			if(strpos($degree->name, $keyword) !== false || strpos($degree->description, $keyword) !== false){
-    				$keywordMatchingDegrees[] = $degree;
-    				continue;
-    			}
-    			foreach ($degree->institutions as $institution) {
-    				if(strpos($institution->name, $keyword) !== false){
-    					$keywordMatchingDegrees[] = $degree;
-    					break;
-    				}
-    			}
-    		}
-    	} else {
+            //filter the results that match the keyword
+    	   $keywordMatchingDegrees = array();
+    	   if(strlen($keyword)>0){
+            $keywordMatchingDegrees = $this->filterByKeyword($institutionCorrectDegrees, $keyword);
+    	   } else {
     		$keywordMatchingDegrees = $institutionCorrectDegrees;
-    	}
+    	   }
 
+            self::makeInstitutionsStrings($keywordMatchingDegrees);
 
-    	foreach ($keywordMatchingDegrees as $degree) {
-    		$institutions = $degree->institutions;
-    		$institutionList = "";
-    		foreach ($institutions as $institution) {
-    			$institutionList = $institutionList . $institution->name . "\n";
-    		}
-    		$degree->institutions = $institutionList;
-    	}
+            $allInstitutions = Institution::all();
 
-    	$allInstitutions = Institution::all();
+            //add favorites
+            $favorites = FavoriteController::getUserFavorites();
 
-    	if(empty($keywordMatchingDegrees)){
-    		$message = 'No results were found, sorry!';
-    		View::make('search.html', array('institutions' => $allInstitutions, 'message' => $message, 'degrees' => $keywordMatchingDegrees));
-    	}
+            //return view
+            if(empty($keywordMatchingDegrees)){
+                $error = 'No results were found, sorry!';
+                View::make('search.html', array('institutions' => $allInstitutions, 'error' => $error, 'degrees' => $keywordMatchingDegrees));
+            }
 
-    	View::make('search.html', array('institutions' => $allInstitutions, 'degrees' => $keywordMatchingDegrees));
-    }
+    	   View::make('search.html', array('institutions' => $allInstitutions, 'degrees' => $keywordMatchingDegrees, 'favorites' => $favorites));
+        }
+
+        private function makeInstitutionsStrings($degrees){
+
+            foreach ($degrees as $degree) {
+                $institutions = $degree->institutions;
+                $institutionList = "";
+                foreach ($institutions as $institution) {
+                    $institutionList = $institutionList . $institution->name . "\n";
+                }
+                $degree->institutions = $institutionList;
+            }
+
+        }
+
+        private function filterByKeyword($degrees, $keyword){
+            $resultDegrees = array();
+            foreach ($degrees as $degree) {
+                if(strpos($degree->name, $keyword) !== false || strpos($degree->description, $keyword) !== false){
+                    $resultDegrees[] = $degree;
+                    continue;
+                }
+                foreach ($degree->institutions as $institution) {
+                    if(strpos($institution->name, $keyword) !== false){
+                        $resultDegrees[] = $degree;
+                        break;
+                    }
+                }
+              }
+            return $resultDegrees;
+        }
 
 }

@@ -34,7 +34,7 @@
     }
 
     public static function degree(){
-      View::make('suunnitelmat/degree.html');
+      View::make('admin/degree.html');
     }
 
   }
