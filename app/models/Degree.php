@@ -111,6 +111,17 @@ class Degree extends BaseModel {
         return $degrees;
     }
 
+    public static function findByInstitution($id){
+        $query= DB::connection()->prepare('SELECT * FROM Degree_Institution WHERE institution_id = :id');
+        $query->execute(array('id' => $id));
+        $rows = $query->fetchAll();
+        $degrees = array();
+        foreach ($rows as $row) {
+            $degrees[] = self::find($row['degree_id']);
+        }
+        return $degrees;
+    }
+
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Degree (name, description, deadline, accepted, acceptancerate, city, extent) VALUES (:name, :description, :deadline, :accepted, :acceptancerate, :city, :extent) RETURNING id');
         $query->execute(array('name' => $this->name, 'description' => $this->description, 'deadline' => $this->deadline, 'accepted'=>$this->accepted, 'acceptancerate' => $this->acceptancerate, 'city' => $this->city, 'extent' => $this->extent));

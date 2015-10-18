@@ -9,7 +9,15 @@
     	public function index(){
     		$institutions = Institution::all();
     		$degrees = Degree::all();
-    		View::make('search.html', array('degrees' => $degrees, 'institutions' => $institutions));
+            $user = self::get_user_logged_in();
+            $favorites = array();
+            if($user){
+                $unprocessedFavorites = Favorite::findByUser($user->id);
+                foreach ($unprocessedFavorites as $favorite) {
+                    $favorites[] = $favorite->degree_id;
+                }
+            }
+    		View::make('search.html', array('degrees' => $degrees, 'institutions' => $institutions, 'favorites' => $favorites));
     	}
 
     	public function search(){

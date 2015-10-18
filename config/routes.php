@@ -68,6 +68,10 @@ $routes->post('/favorite/:id/delete', function($id){
 FavoriteController::delete($id);
 });
 
+$routes->post('/favorite/:id/remove', function($id){
+FavoriteController::remove($id);
+});
+
 $routes->get('/institutions', function(){
 InstitutionController::index();
 });

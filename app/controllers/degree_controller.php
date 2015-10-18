@@ -114,8 +114,8 @@
 
         public static function delete($id) {
             $favorites = Favorite::findByDegree($id);
-            if(!empty($favorites)){
-                Redirect::to('/degrees', array('error' => 'Degree is favorited by a user, so it can not be deleted.'));
+            foreach ($favorites as $favorite) {
+                Favorite::delete($favorite->applicant_id, $favorite->degree_id);
             }
 
             $degree = Degree::find($id);

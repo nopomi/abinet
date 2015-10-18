@@ -22,9 +22,9 @@
     <form class="form" id="searchForm" method="post" action="{{base_path}}/search">
       <div class="panel-heading">
         <div class="input-group">
-          <input class="form-control" id="keyword" name="keyword" type="text" placeholder="Search for degrees">
+          <input class="form-control" id="keyword" name="keyword" type="text" placeholder="e.g.'Aalto', 'Neuroscience' or 'banking'">
           <span class="input-group-btn">
-            <button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            <button class="btn btn-success" type="submit">Search <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
           </span>
         </div>
         <br/>
@@ -80,11 +80,9 @@
     </form>
   </div>
 </div>
-</div>
 
 <!-- Search results -->
 
-<div class="col-xs-11">
 <table class="table table-striped">
     <thead>
         <tr>
@@ -110,24 +108,29 @@
                         data-city="{{degree.city}}" data-extent="{{degree.extent}}" data-institutions="{{degree.institutions}}">
                     <span class="glyphicon glyphicon-info-sign" aria-hidden="true">
                 </button></td>
-                <form method="post" action="{{base_path}}/favorite/{{degree.id}}/new" style="display: inline-block;">
-                <td><button class="btn btn-default" type="submit">
+                {% if degree.id in favorites %}
+                <form method="post" action="{{base_path}}/favorite/{{degree.id}}/remove" style="display: inline-block;">
+                <td><button class="btn btn-warning" type="submit">
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>Favorite</button></td>
                 </form>
+                {% else %}
+                <form method="post" action="{{base_path}}/favorite/{{degree.id}}/new" style="display: inline-block;">
+                <td><button class="btn btn-default" type="submit">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>Add to favorites</button></td>
+                </form>
+                {% endif %}
         </tr>
         {% endfor %}
     </tbody>
 
 </table>
 
-</div>
-
 <!-- Modal with additional info on degree -->
 <div class="modal fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel" text="">B.Sc. Computer Science</h4>
             </div>
             <div class="modal-body">

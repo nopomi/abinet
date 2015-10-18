@@ -62,6 +62,10 @@ class InstitutionController extends BaseController {
     }
 
     public static function delete($id) {
+        $degrees = Degree::findByInstitution($id);
+        if(!empty($degrees)){
+            Redirect::to('/institutions', array('error' => 'Institution could not be deleted, because it is linked to one or more degrees. First delete related degrees under Manage->Degrees.'));
+        }
         $institution = Institution::find($id);
         $institution->delete();
         Redirect::to('/institutions', array('message' => 'Institution deleted!'));

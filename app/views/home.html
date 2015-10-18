@@ -13,24 +13,24 @@
 
 	<div class="carousel-inner" role="listbox">
 		<div class="item active">
-			<img src="http://clanfa.com/dundy/mideluola/tsoha/Helsinki_University.jpg" alt="University of Helsinki">
+			<img src="{{degree1.institution.picture}}" alt="{{degree1.institution.name}}">
 			<div class="carousel-caption">
-				<h3> B.Sc. Computer Science</h3>
-				<p>A bachelor's degree in computer science at the University of Helsinki offers unique opportunities for students interested in becoming top-tier programmers and software architects.</p>
+				<h3>{{degree1.name}}</h3>
+				<p>{{degree1.description}}</p>
 			</div>
 		</div>
 		<div class="item">
-			<img src="http://clanfa.com/dundy/mideluola/tsoha/Aalto_University.jpg" alt="Aalto University">
+			<img src="{{degree2.institution.picture}}" alt="{{degree2.institution.name}}">
 			<div class="carousel-caption">
-				<h3> B.Tech. Computer Engineering</h3>
-				<p>A bachelor's degree in computer science at the Aalto University offers unique opportunities for students interested in becoming top-tier hardware and software engineers.</p>
+				<h3>{{degree2.name}}</h3>
+				<p>{{degree2.description}}</p>
 			</div>
 		</div>
 		<div class="item">
-			<img src="http://clanfa.com/dundy/mideluola/tsoha/Lappeenranta_Universty_of_Technology.jpg" alt="Lappeenranta University of Technology">
+			<img src="{{degree3.institution.picture}}" alt="{{degree3.institution.name}}">
 			<div class="carousel-caption">
-				<h3> B.Tech. Software Engineering</h3>
-				<p>A bachelor's degree in software engineering at the Lappeenranta University offers no opportunities for students interested in becoming top-tier hardware and software engineers.</p>
+				<h3>{{degree3.name}}</h3>
+				<p>{{degree3.description}}</p>
 			</div>
 		</div>
 	</div>
@@ -54,11 +54,11 @@
 		<div class="col-lg-4">
 			<h2>Search for degrees</h2>
 			<p>Find something to study that suits you or just browse to see what's out there.</p>
-			<p><a class="btn btn-primary" href="#" role="button">Let's do it</a></p>
+			<p><a class="btn btn-primary" href="{{base_path}}/search" role="button">Let's do it</a></p>
 		</div>
 		<div class="col-lg-4">
 			<h2>Log in</h2>
-			<p>Log in to view the degrees you have saved.</p>
+			<p>Log in to collect your favorite degrees and review them when it's time to decide.</p>
 			<p><a class="btn btn-danger" href="{{base_path}}/login" role="button">Login</a></p>
 		</div>
 		<div class="col-lg-4">

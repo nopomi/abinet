@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<h2>Institutions</h2>
+
 <!-- Alert for successful add that redirects to this page -->
 {% if message!=null %}
 <div class="alert alert-success">
@@ -9,9 +11,14 @@
 </div>
 {% endif %}
 
+{% if error!=null %}
+<div class="alert alert-warning">
+    {{error}}
+</div>
+{% endif %}
+
 <!-- List of institutions-->
 
-<h2>Institutions</h2>
 <table class="table table-striped">
     <thead>
         <tr>
