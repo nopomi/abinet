@@ -117,9 +117,9 @@ class Degree extends BaseModel {
     
     public function validate_name(){
         $errors = array();
-        $valid = $this->validate_string_length($this->name, 1);
+        $valid = $this->validate_string_length($this->name, 1, 80);
         if($valid == false){
-            $errors[] = 'Please fill out a name';
+            $errors[] = 'Please fill out a name (max 80 chars)';
         }
         return $errors;
     }

@@ -30,12 +30,14 @@
     public function validate_string_length($string, $minLength, $maxLength){
         if($string == null || !is_string($string)){
             return false;
-        } else if(strlen($string)<$minLength || strlen($string)>$maxLength)
+        } else if(strlen($string)<$minLength || strlen($string)>$maxLength){
+          return false;
+        }
         return true;
     }
     
     public function validate_number_size($number, $min, $max){
-        if($number == null || !is_number($number) || is_numeric($number) == false){
+        if($number == null || !is_numeric($number) || is_numeric($number) == false){
             return false;
         } elseif ($number < $min || $number > $max){
             return false;
