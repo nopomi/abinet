@@ -32,6 +32,10 @@
     			View::make('search.html', array('error' => 'Some search parameters were weird, try again!'));
     	   }
 
+           //Convert percentages to decimal
+           $accepted_max = $accepted_max / 100;
+           $accepted_min = $accepted_min / 100;
+
            //Find degrees that match the city and numeric parameters
     	   $degrees = Degree::search($city, $accepted_max, $accepted_min, $extent_max, $extent_min);
 
