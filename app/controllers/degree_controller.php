@@ -7,6 +7,9 @@
     class DegreeController extends BaseController {
 
         public static function index() {
+            if(self::get_user_admin() == null) {
+                Redirect::to('/home');
+            }
             $allInstitutions = Institution::all();
             $degrees = Degree::all();
             foreach ($degrees as $degree) {
@@ -22,14 +25,20 @@
         }
 
         public static function create() {
+            if(self::get_user_admin() == null) {
+                Redirect::to('/home');
+            }
             $institutions = Institution::all();
             View::make('/admin/degree.html', array('institutions' => $institutions));
         }
 
         public static function store() {
+            if(self::get_user_admin() == null) {
+                Redirect::to('/home');
+            }
             $params = $_POST;
 
-            $degree = self::createDegree($params, $id);
+            $degree = self::createDegree($params, null);
 
             $errors = $degree->errors();
 
@@ -47,6 +56,9 @@
         }
 
         public static function edit($id) {
+            if(self::get_user_admin() == null) {
+                Redirect::to('/home');
+            }
             $degree = Degree :: find($id);
             $allInstitutions = Institution :: all();
             $institutionList = array();
@@ -58,7 +70,9 @@
         }
 
         public static function update($id) {
-
+            if(self::get_user_admin() == null) {
+                Redirect::to('/home');
+            }
             $params = $_POST;
 
             $degree = self::createDegree($params, $id);
@@ -79,6 +93,9 @@
         }   
 
         public static function delete($id) {
+            if(self::get_user_admin() == null) {
+                Redirect::to('/home');
+            }
             $favorites = Favorite::findByDegree($id);
             foreach ($favorites as $favorite) {
                 Favorite::delete($favorite->applicant_id, $favorite->degree_id);

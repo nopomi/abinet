@@ -7,6 +7,9 @@
 class SuggestionController extends BaseController {
 
 	public static function index(){
+		if(self::get_user_admin() == null) {
+                Redirect::to('/home');
+        }
 		$allSuggestions = Suggestion::all();
 		function cmp($a, $b){
 			if($a->processed == $b->processed){
@@ -49,12 +52,18 @@ class SuggestionController extends BaseController {
 	}
 
 	public static function delete($id){
+		if(self::get_user_admin() == null) {
+                Redirect::to('/home');
+        }
 		$suggestion = Suggestion::find($id);
 		$suggestion->delete();
 		Redirect::to('/suggestions', array('message' => 'Suggestion deleted!'));
 	}
 
 	public static function toggleProcessed($id){
+		if(self::get_user_admin() == null) {
+                Redirect::to('/home');
+        }
 		$suggestion = Suggestion::find($id);
 		if(!$suggestion->processed){
 			$suggestion->processed = 1;
